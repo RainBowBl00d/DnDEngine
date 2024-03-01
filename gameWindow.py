@@ -74,6 +74,8 @@ create_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-120, 20)
 play_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
 # </editor-fold>
 
+testtext_obj = Gameobject.gameobject.create_textfield(startscreen, 0, 0, sprite='Button.png', color=(0,0,0))
+
 while running:
     startscreen.display.fill((255, 255, 255))
     pickScreen.display.fill((255, 255, 255))
@@ -82,6 +84,8 @@ while running:
             running = False
 
     updateStartScreen()
+
+
 
     pickScreen.renderGameobjects()
     startscreen.renderGameobjects()

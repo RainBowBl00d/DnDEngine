@@ -93,4 +93,21 @@ class gameobject:
                                                  color=color)
         background_obj.addComponent(textrenderer)
 
-        return  background_obj
+        return background_obj
+    @staticmethod
+    def create_textfield(window, x, y, text="enter text", size=32, sprite=None, color=None):
+        # Create a game object
+        textfield_obj = gameobject(window, x=x, y=y, height=100, width=200,sprite=sprite, color=color)
+
+        textfield_obj.addComponent(textfield_obj.transform)
+        textfield_obj.addComponent(textfield_obj.spriterenderer)
+
+
+        # Create a text renderer component and add it to the game object
+        text_renderer = TextRenderer.textrenderer(textfield_obj, text=text, size=size, offset_y=0, offset_x=0)
+        textfield_obj.addComponent(text_renderer)
+
+        button = TextRenderer.textField(textfield_obj, text_renderer )
+        textfield_obj.addComponent(button)
+
+        return textfield_obj
