@@ -1,13 +1,13 @@
 import pygame
 class textrenderer:
-    def __init__(self, gameobject, offset_x = 0, offeset_y = 0, text="Example text", color=(0, 0, 0), size=32, font=None):
+    def __init__(self, gameobject, offset_x = 0, offset_y = 0, text="Example text", color=(0, 0, 0), size=32, font=None):
         self.gameobject = gameobject
         self.text = text
         self.font = font or pygame.font.Font(None, size)
         self.color = color
         self.size = size
         self.offset_x = offset_x
-        self.offset_y = offeset_y
+        self.offset_y = offset_y
 
 
     def setText(self, text):
@@ -25,21 +25,22 @@ class textrenderer:
     def setSize(self, size):
         self.size = size
 
-    def setOffsetX(self, offset_x):
+    def setOffset(self, offset_x, offset_y):
         self.offset_x = offset_x
-    def setOffsetY(self, offset_y):
         self.offset_y = offset_y
+
 
     def addOffsetX(self, offset_x):
         self.offset_x += offset_x
+
     def addOffsetY(self, offset_y):
         self.offset_y -= offset_y
 
-
     def update(self, surface):
         text_surface = self.font.render(self.text, True, self.color)
-        surface.blit(text_surface, (self.gameobject.transform.rect.centerx + self.offset_x, self.gameobject.transform.rect.centery - self.offset_y))
 
+        surface.blit(text_surface, (self.gameobject.transform.rect.centerx + self.offset_x
+                                    , self.gameobject.transform.rect.centery - self.offset_y))
 
 class textField:
     def __init__(self, gameobject, textrenderer):

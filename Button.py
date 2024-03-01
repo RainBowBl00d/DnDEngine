@@ -12,24 +12,24 @@ class button:
             function()
         return
 
-    def getClicking(self, funtions):
+    def getClicking(self, functions):
         pos = pygame.mouse.get_pos()
 
         if self.gameobject.transform.rect.collidepoint(pos):
             if not self.clicked and pygame.mouse.get_pressed()[0]:
                 self.clicked = True
-                self.onClick(funtions)
+                self.onClick(functions)
             else:
                 self.clicked = False
         return
 
-    def getClick(self, funtions):
+    def getClick(self, functions):
         pos = pygame.mouse.get_pos()
 
-        if self.gameobject.transform.rect.collidepoint(pos):
+        if  self.gameobject.transform.rect.collidepoint(pos):
             if not self.clicked and pygame.mouse.get_pressed()[0]:
                 self.clicked = True
-                self.onClick(funtions)
+                self.onClick(functions)
             elif self.clicked and not pygame.mouse.get_pressed()[0]:
                 self.clicked = False
         return

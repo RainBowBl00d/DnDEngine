@@ -1,7 +1,9 @@
 import pygame
+import Button, TextRenderer
+
 
 class spriterenderer:
-    def __init__(self, sprite=None, color=None):
+    def __init__(self, sprite, color):
         if sprite:
             self.sprite = pygame.image.load(sprite).convert_alpha()
             self.color = None
@@ -17,37 +19,35 @@ class spriterenderer:
     def setColor(self, color):
         self.color = color
 
+
 class transform:
-    def __init__(self, x, y, spriterenderer, width=None, height=None, scale=1):
-        if hasattr(spriterenderer, 'sprite') and spriterenderer.sprite:
-            self.spriterenderer = spriterenderer
-            self.sprite = spriterenderer.sprite
-            self.rect = self.sprite.get_rect(topleft=(x, y))
-            if width is not None and height is not None:
-                self.rect.width = scale * width
-                self.rect.height = scale * height
+    def __init__(self, gameobject, x, y, width, height, scale):
+        self.gameobject = gameobject
+
+        if self.gameobject.spriterenderer.sprite:
+            self.rect = gameobject.spriterenderer.sprite.get_rect(topleft=(x, y))
+            scaled_sprite = pygame.transform.scale(self.gameobject.spriterenderer.sprite,
+                                                   (width * scale, height * scale))
+            self.gameobject.spriterenderer.setSprite(scaled_sprite)
         else:
-            self.spriterenderer = spriterenderer
             self.rect = pygame.Rect(x, y, width * scale, height * scale)
 
+
 class gameobject:
-    def __init__(self, window, transform):
+    def __init__(self, window,x, y, width=100, height=100, scale=1, sprite=None, color=None):
         self.components = []
-        self.transform = transform or transform()
-        self.surface = window.display  # Assign display directly
+        self.surface = window.display
         self.isActive = True
+        self.spriterenderer = spriterenderer(sprite=sprite,color= color)
+        self.transform = transform(self, x=x, y=y, width=width, height=height, scale=scale)
         window.gameobjects.append(self)
 
     def render(self):
         if self.isActive:
-            if hasattr(self.transform, 'spriterenderer') and self.transform.spriterenderer:
-                if self.transform.spriterenderer.sprite:
-                    self.surface.blit(self.transform.spriterenderer.sprite, self.transform.rect)
-                elif self.transform.spriterenderer.color:
-                    pygame.draw.rect(self.surface, self.transform.spriterenderer.color, self.transform.rect)
+            if self.spriterenderer.sprite:
+                self.surface.blit(source=self.spriterenderer.sprite, dest=self.transform.rect)
             else:
-                pygame.draw.rect(self.surface, (255, 0, 0), self.transform.rect)
-
+                pygame.draw.rect(surface=self.surface,color= self.spriterenderer.color,rect= self.transform.rect)
             self.update()
 
     def setActive(self, isActive):
@@ -66,3 +66,31 @@ class gameobject:
         for component in self.components:
             if hasattr(component, 'update'):
                 component.update(self.surface)
+
+    @staticmethod
+    def create_button(window, x, y, text="Button", size=32, sprite=None, color=None):
+        # Create a game object
+        button_obj = gameobject(window, x=x, y=y, height=100, width=200,sprite=sprite, color=color)
+
+        button_obj.addComponent(button_obj.transform)
+        button_obj.addComponent(button_obj.spriterenderer)
+
+        # Create a button component and add it to the game object
+        button = Button.button(button_obj)
+        button_obj.addComponent(button)
+
+        # Create a text renderer component and add it to the game object
+        text_renderer = TextRenderer.textrenderer(button_obj, text=text, size=size, offset_y=0, offset_x=0)
+        button_obj.addComponent(text_renderer)
+
+        return button_obj
+
+    @staticmethod
+    def create_background(window, sprite, color, x, y, width, height, scale, text, size):
+        background_obj = gameobject(window, sprite=sprite, color=None, x=x, y=y,
+                                                    width=width, height=height, scale=scale)
+        textrenderer = TextRenderer.textrenderer(background_obj, text=text, size=size,
+                                                 color=color)
+        background_obj.addComponent(textrenderer)
+
+        return  background_obj
