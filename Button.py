@@ -1,8 +1,5 @@
 import pygame
-
 import MouseInput
-
-
 class button:
     def __init__(self, gameobject):
         self.gameobject = gameobject

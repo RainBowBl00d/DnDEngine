@@ -23,8 +23,8 @@ class window:
         self.isActive = isActive
 
 
-# <editor-fold desc="functions">
-###################################################################
+#<editor-fold desc="functions">
+
 
 def exit():
     global running
@@ -34,7 +34,7 @@ def switchScenes(setActiveScene, disableScene):
     disableScene.setActive(False)
     setActiveScene.setActive(True)
 
-####################################################################
+
 def updatepickScreen():
     if pickScreen.isActive:
         play_bt_obj.get_component(Button.button).getClick([lambda: switchScenes(characterScreen, pickScreen)])
@@ -44,6 +44,8 @@ def updateStartScreen():
     if startscreen.isActive:
         start_bt_obj.get_component(Button.button).getClick(lambda: switchScenes(pickScreen, startscreen))
         exit_bt_obj.get_component(Button.button).getClick([exit])
+#</editor-fold>
+
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -82,6 +84,9 @@ back_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
 # </editor-fold>
 
 # <editor-fold desc="Character creation">
+
+
+
 # </editor-fold>
 
 while running:
