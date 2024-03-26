@@ -31,19 +31,28 @@ def exit():
     running = False
 
 def switchScenes(setActiveScene, disableScene):
+    print("Hello")
     disableScene.setActive(False)
     setActiveScene.setActive(True)
 
 
 def updatepickScreen():
     if pickScreen.isActive:
-        play_bt_obj.get_component(Button.button).getClick([lambda: switchScenes(characterScreen, pickScreen)])
         back_bt_obj.get_component(Button.button).getClick([lambda: switchScenes(startscreen, pickScreen)])
+        create_bt_obj.get_component(Button.button).getClick(lambda: switchScenes(createScreen, pickScreen))
 
 def updateStartScreen():
     if startscreen.isActive:
         start_bt_obj.get_component(Button.button).getClick(lambda: switchScenes(pickScreen, startscreen))
         exit_bt_obj.get_component(Button.button).getClick([exit])
+
+def updateCreateScreen():
+    if createScreen.isActive:
+        character_bt_obj.get_component(Button.button).getClick(lambda : switchScenes(characterScreen, createScreen))
+
+def updateCharacterScreen():
+    if characterScreen.isActive:
+        return
 #</editor-fold>
 
 
@@ -53,6 +62,8 @@ startscreen = window(1440, 720)
 startscreen.setActive(True)
 pickScreen = window(1440, 720)
 pickScreen.setActive(False)
+createScreen = window(1440, 720)
+createScreen.setActive(False)
 characterScreen = window(1440, 720)
 characterScreen.setActive(False)
 
@@ -83,15 +94,23 @@ play_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
 back_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
 # </editor-fold>
 
+# <editor-fold desc="Create creation">
+createbackground_obj = Gameobject.gameobject.create_background(createScreen, sprite="StartScreen.jpg", color=(0, 0, 0), x=0, y=0,
+                                               width=1440, height=720, scale=1,text="Choose what you would like to create...",size=70)
+#Button creation
+character_bt_obj = Gameobject.gameobject.create_button(createScreen, 100, 310, text="Character", size=50, sprite="Button.png")
+
+character_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-140,20)
+
+# </editor-fold>
 # <editor-fold desc="Character creation">
-
-
 
 # </editor-fold>
 
 while running:
     startscreen.display.fill((255, 255, 255))
     pickScreen.display.fill((255, 255, 255))
+    createScreen.display.fill((255, 255, 255))
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -99,9 +118,13 @@ while running:
 
     updateStartScreen()
     updatepickScreen()
+    updateCreateScreen()
+    updateCharacterScreen()
 
     startscreen.renderGameobjects()
     pickScreen.renderGameobjects()
+    createScreen.renderGameobjects()
+    characterScreen.renderGameobjects()
 
     clock.tick(60)
     pygame.display.flip()
