@@ -31,7 +31,6 @@ def exit():
     running = False
 
 def switchScenes(setActiveScene, disableScene):
-    print("Hello")
     disableScene.setActive(False)
     setActiveScene.setActive(True)
 
@@ -55,7 +54,7 @@ def updateCharacterScreen():
         return
 #</editor-fold>
 
-
+#<editor-fold desc="Game initialization">
 pygame.init()
 clock = pygame.time.Clock()
 startscreen = window(1440, 720)
@@ -68,6 +67,7 @@ characterScreen = window(1440, 720)
 characterScreen.setActive(False)
 
 running = True
+#</editor-fold>
 
 # <editor-fold desc="Start Menu creation">
 #Background creation
