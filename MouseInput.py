@@ -2,9 +2,11 @@ import pygame
 class mouseInput:
     current_frame_buttons = {}
     last_frame_buttons = {}
+    mouse_position = None
 
     @staticmethod
     def update(event):
+        mouseInput.mouse_position = pygame.mouse.get_pos()
         mouseInput.last_frame_buttons = mouseInput.current_frame_buttons.copy()
         if event.type == pygame.MOUSEBUTTONDOWN:
             mouseInput.current_frame_buttons[event.button] = True

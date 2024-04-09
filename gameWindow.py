@@ -104,6 +104,10 @@ character_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-140,20)
 
 # </editor-fold>
 # <editor-fold desc="Character creation">
+character_create_backgrund_obj = Gameobject.gameobject.create_background(characterScreen, sprite="StartScreen.jpg", color=(0, 0, 0), x=0, y=0,
+                                               width=1440, height=720, scale=1,text="",size=70)
+
+
 
 # </editor-fold>
 
