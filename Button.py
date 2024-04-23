@@ -30,7 +30,6 @@ class button:
         pos = pygame.mouse.get_pos()
         if  self.gameobject.transform.rect.collidepoint(pos):
             if not self.clicked and MouseInput.mouseInput.getButtonDown(pygame.BUTTON_LEFT):
-                print("here")
                 self.clicked = True
                 self.onClick(functions)
         if self.clicked and MouseInput.mouseInput.getButtonUp(pygame.BUTTON_LEFT):

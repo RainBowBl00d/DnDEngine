@@ -1,3 +1,4 @@
+import DragnDropField
 import pygame
 import Button, TextRenderer, Item
 
@@ -106,6 +107,18 @@ class gameobject:
         textfield_obj.addComponent(button)
 
         return textfield_obj
+
+    @staticmethod
+    def create_dragnDropfield(window, x, y, sprite=None, color=None):
+        dragnDropfield_obj = gameobject(window, x=x, y=y, height=100, width=200,sprite=sprite, color=color)
+
+        dragnDropfield_obj.addComponent(dragnDropfield_obj.transform)
+        dragnDropfield_obj.addComponent(dragnDropfield_obj.spriterenderer)
+
+        dragNDropField = DragnDropField.dragNDropField(dragnDropfield_obj)
+        dragnDropfield_obj.addComponent(dragNDropField)
+
+        return dragnDropfield_obj
 
     @staticmethod
     def create_accessory_item(window, sprite, color,x, y, width, height, scale, name, type, slot_type):

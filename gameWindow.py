@@ -1,3 +1,4 @@
+import DragnDropField
 import pygame
 import Gameobject
 import Button
@@ -37,13 +38,17 @@ def switchScenes(setActiveScene, disableScene):
 
 def updatepickScreen():
     if pickScreen.isActive:
-        play_bt_obj.get_component(Button.button).getClick([lambda: switchScenes(characterScreen, pickScreen)])
+        create_bt_obj.get_component(Button.button).getClick([lambda: switchScenes(characterScreen, pickScreen)])
         back_bt_obj.get_component(Button.button).getClick([lambda: switchScenes(startscreen, pickScreen)])
 
 def updateStartScreen():
     if startscreen.isActive:
         start_bt_obj.get_component(Button.button).getClick(lambda: switchScenes(pickScreen, startscreen))
         exit_bt_obj.get_component(Button.button).getClick([exit])
+
+def updateCharacterScreen():
+    if characterScreen.isActive:
+        dragNDrop_obj.get_component(DragnDropField.dragNDropField).getHover()
 #</editor-fold>
 
 
@@ -85,6 +90,7 @@ back_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
 
 # <editor-fold desc="Character creation">
 
+dragNDrop_obj = Gameobject.gameobject.create_dragnDropfield(characterScreen, 600, 310, sprite="Button.png" )
 
 
 # </editor-fold>
@@ -99,9 +105,11 @@ while running:
 
     updateStartScreen()
     updatepickScreen()
+    updateCharacterScreen()
 
     startscreen.renderGameobjects()
     pickScreen.renderGameobjects()
+    characterScreen.renderGameobjects()
 
     clock.tick(60)
     pygame.display.flip()
