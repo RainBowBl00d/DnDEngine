@@ -1,55 +1,61 @@
-import Item
-
+import json
+import os
 class character:
-    def __init__(self, health, stamina, armor, gameobject):
-        self.gameobject = gameobject
+    def __init__(self, name, maxhealth, maxmana, maxarmor, maxinventoryslots):
+        self.name = name
+        self.spritePath = ""
 
-        self.health = health
-        self.stamina = stamina
-        self.armor = armor
+        self.currenthealth = maxhealth
+        self.currentmana = maxmana
+        self.currentarmor = maxarmor
 
-        self.attributes = []
+        self.maxhealth = maxhealth
+        self.maxmana = maxmana
+        self.maxarmor = maxarmor
 
-        self.materials = {}
-        self.equipment = {}
-        self.accessories = {}
+        self.maxinventoryslots = maxinventoryslots
 
-        self.maxmaterials = 0
-        self.maxaccessories = 0
-        self.differentequipmentslots = {}
+    def addHealth(self, amount):
+        if self.currenthealth + amount <= self.maxhealth:
+            self.currenthealth += amount
+        else:
+            self.currenthealth = self.maxhealth
 
-    def addattribute(self, attribute, maxamount):
-        self.attributes[attribute] = maxamount
+    def subtractHealth(self, amount):
+        if self.currenthealth - amount < 0:
+            pass
+            #Do dying stuff
+        else:
+            self.currenthealth -= amount
 
-    def removeattribute(self, attribute):
-        self.attributes.pop(attribute)
+    def addMana(self, amount):
+        if self.currentmana + amount <= self.maxmana:
+            self.currentmana += amount
+        else:
+            self.currentmana = self.maxmana
 
-    def addmaterialslot(self):
-        self.maxmaterials +=1
+    def subtractMana(self, amount):
+        if self.currentmana - amount < 0:
+            self.currentmana = 0
+        else:
+            self.currentmana -= amount
 
-    def removemateriaslot(self):
-        self.maxmaterials -=1
+    @staticmethod
+    def serializeCharacterData(character):
+        folder_name = f"{character.name}_DATA"
+        os.makedirs(folder_name, exist_ok=True)
 
-    def addaccessorylot(self):
-        self.maxaccessories +=1
+        character_json = json.dumps(character.__dict__, indent=4)
 
-    def removeaccessorylot(self):
-        self.maxaccessories -=1
+        json_file_path = os.path.join(folder_name, "character.json")
+        with open(json_file_path, "w") as file:
+            file.write(character_json)
 
-    def addequipmentslot(self, slot_name):
-        self.equipment[slot_name] = None
+        if character.spritePath:
+            sprite_file_name = os.path.basename(character.spritePath)
+            sprite_dest_path = os.path.join(folder_name, sprite_file_name)
+            if os.path.exists(character.spritePath):
+                os.replace(character.spritePath, sprite_dest_path)
+            else:
+                print(f"Sprite image '{character.spritePath}' not found.")
 
-    def removeequipmentslot(self, slot_name):
-        self.equipment.pop(slot_name)
-
-    def boostattribute(self):
-        combined = self.equipment | self.accessories
-        if combined == {}:
-            print("The character doesn't have any equipment or accessory items")
-            return
-        for item in combined.items():
-            for prefix, boost in item.prefixes.items():
-                if prefix in self.attributes:
-                    self.attributes[prefix] += boost
-                else:
-                    self.addattribute(prefix, boost)

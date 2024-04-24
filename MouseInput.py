@@ -23,14 +23,18 @@ class mouseInput:
 class keyboardInput:
     current_frame_buttons = {}
     last_frame_buttons = {}
+    unicode = ""
 
     @staticmethod
     def update(event):
         keyboardInput.last_frame_buttons = keyboardInput.current_frame_buttons.copy()
-        if event.type == pygame.KEYDOWN:
-            keyboardInput.current_frame_buttons[event.button] = True
+        if event.type == pygame.KEYDOWN or event.type == pygame.KEYUP:
+            keyboardInput.unicode = event.unicode
+            keyboardInput.current_frame_buttons[event.key] = True
         elif event.type == pygame.KEYUP:
-            keyboardInput.current_frame_buttons[event.button] = False
+            keyboardInput.keydown = False
+            keyboardInput.current_frame_buttons[event.key] = False
+
 
     @staticmethod
     def getButtonDown(button):

@@ -92,15 +92,20 @@ class gameobject:
         background_obj.addComponent(textrenderer)
 
         return background_obj
+    @staticmethod
+    def create_image(window, x, y, width, height, scale):
+        image_obj = gameobject(window, sprite="defaultCharacterSprite.png", x=x, y=y,
+                                                    width=width, height=height, scale=scale)
+        return image_obj
 
     @staticmethod
-    def create_textfield(window, x, y, text="enter text", size=32, sprite=None, color=None):
-        textfield_obj = gameobject(window, x=x, y=y, height=100, width=200,sprite=sprite, color=color)
+    def create_textfield(window, x, y,width, heigth, text="enter text", size=32, sprite=None, color=None, input_type = "mixed"):
+        textfield_obj = gameobject(window, x=x, y=y, height=heigth, width=width,sprite=sprite, color=color)
 
         textfield_obj.addComponent(textfield_obj.transform)
         textfield_obj.addComponent(textfield_obj.spriterenderer)
 
-        text_renderer = TextRenderer.textrenderer(textfield_obj, text=text, size=size, offset_y=0, offset_x=0)
+        text_renderer = TextRenderer.textrenderer(textfield_obj, text=text, size=size, offset_y=0, offset_x=0, input_type = input_type)
         textfield_obj.addComponent(text_renderer)
 
         button = TextRenderer.textField(textfield_obj, text_renderer )
@@ -109,8 +114,8 @@ class gameobject:
         return textfield_obj
 
     @staticmethod
-    def create_dragnDropfield(window, x, y, sprite=None, color=None):
-        dragnDropfield_obj = gameobject(window, x=x, y=y, height=100, width=200,sprite=sprite, color=color)
+    def create_dragnDropfield(window, x, y, text, size, sprite=None,color=None):
+        dragnDropfield_obj = gameobject(window, x=x, y=y, height=100, width=200,sprite=sprite, color=color )
 
         dragnDropfield_obj.addComponent(dragnDropfield_obj.transform)
         dragnDropfield_obj.addComponent(dragnDropfield_obj.spriterenderer)
@@ -118,51 +123,7 @@ class gameobject:
         dragNDropField = DragnDropField.dragNDropField(dragnDropfield_obj)
         dragnDropfield_obj.addComponent(dragNDropField)
 
+        text_renderer = TextRenderer.textrenderer(dragnDropfield_obj, text=text, size=size, offset_y=0, offset_x=0)
+        dragnDropfield_obj.addComponent(text_renderer)
         return dragnDropfield_obj
-
-    @staticmethod
-    def create_accessory_item(window, sprite, color,x, y, width, height, scale, name, type, slot_type):
-        accessory_item_obj = gameobject(window= window, x=x, y=y, sprite=sprite, color=color, width=width, height=height,
-                                        scale=scale)
-
-        accessory_item_obj.addComponent(accessory_item_obj.transform)
-        accessory_item_obj.addComponent(accessory_item_obj.spriterenderer)
-
-        accessory_item = Item.item(gameobject=accessory_item_obj, name=name, type="accessory", slot_type="accessory")
-
-        accessory_item_obj.addComponent(accessory_item)
-
-        return accessory_item_obj
-
-    @staticmethod
-    def create_material_item(window, sprite, color,x, y, width, height, scale, name, slot_type, isStackable, maxStack):
-
-        material_item_obj = gameobject(window=window, x=x, y=y, sprite=sprite, color=color, width=width, height=height,
-                                            scale=scale)
-
-        material_item_obj.addComponent(material_item_obj.transform)
-        material_item_obj.addComponent(material_item_obj.spriterenderer)
-
-        material_item = Item.item(gameobject=material_item_obj, name=name, type="material", slot_type="material",
-                                  stackable= isStackable, maxStack=maxStack)
-
-        material_item_obj.addComponent(material_item)
-
-        return material_item_obj
-
-    @staticmethod
-    def create_equipment_item(window, sprite, color,x, y, width, height, scale, name, slot_type, isVisual):
-
-        equipment_item_obj = gameobject(window=window, x=x, y=y, sprite=sprite, color=color, width=width, height=height,
-                                            scale=scale)
-
-        equipment_item_obj.addComponent(equipment_item_obj.transform)
-        equipment_item_obj.addComponent(equipment_item_obj.spriterenderer)
-
-        material_item = Item.item(gameobject=equipment_item_obj, name=name, type="equipiment", slot_type=slot_type,
-                                  isVisual=isVisual)
-
-        equipment_item_obj.addComponent(material_item)
-
-        return equipment_item_obj
 

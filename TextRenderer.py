@@ -1,6 +1,7 @@
 import pygame
+
 class textrenderer:
-    def __init__(self, gameobject, offset_x = 0, offset_y = 0, text="Example text", color=(0, 0, 0), size=32, font=None):
+    def __init__(self, gameobject, offset_x = 0, offset_y = 0, text="Example text", color=(0, 0, 0), size=32, font=None, input_type="mixed"):
         self.gameobject = gameobject
         self.text = text
         self.font = font or pygame.font.Font(None, size)
@@ -8,6 +9,8 @@ class textrenderer:
         self.size = size
         self.offset_x = offset_x
         self.offset_y = offset_y
+        self.input_type = input_type
+
 
 
     def setText(self, text):
@@ -51,19 +54,30 @@ class textField:
         self.typing = False
 
     def input(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            if self.gameobject.transform.rect.collidepoint(event.pos):
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        mouse_pressed = pygame.mouse.get_pressed()
+
+        if mouse_pressed[0]:
+            if self.gameobject.transform.rect.collidepoint(mouse_x, mouse_y):
                 self.clicked = True
             else:
                 self.clicked = False
-        elif event.type == pygame.KEYDOWN:
-            if self.clicked:
+
+        if self.clicked and pygame.key.get_pressed()[pygame.K_RETURN]:
+            self.clicked = False
+        elif self.clicked and pygame.key.get_pressed()[pygame.K_BACKSPACE]:
+            self.textrenderer.text = self.textrenderer.text[:-1]
+        elif self.clicked:
+            if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    # Finish editing when Enter is pressed
                     self.clicked = False
                 elif event.key == pygame.K_BACKSPACE:
                     self.textrenderer.text = self.textrenderer.text[:-1]
-                else:
+                elif self.textrenderer.input_type == 'letters' and event.unicode.isalpha():
+                    self.textrenderer.text += event.unicode
+                elif self.textrenderer.input_type == 'numbers' and event.unicode.isdigit():
+                    self.textrenderer.text += event.unicode
+                elif self.textrenderer.input_type == 'mixed':
                     self.textrenderer.text += event.unicode
 
         return self.textrenderer.text
