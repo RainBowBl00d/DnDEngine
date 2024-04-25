@@ -2,6 +2,8 @@ import DragnDropField
 import pygame
 import Gameobject
 import Button
+import Item
+import Map
 import MouseInput
 import TextRenderer
 import Character
@@ -115,8 +117,7 @@ selectionName_obj = Gameobject.gameobject.create_textfield(characterScreen, 650,
 characterBack_bt_obj = Gameobject.gameobject.create_button(characterScreen, 1200, 600, text="Back", size=64, sprite="Button.png")
 characterBack_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
 
-# </editor-fold>
-
+# </editor-fold
 while running:
     startscreen.display.fill((255, 255, 255))
     pickScreen.display.fill((255, 255, 255))
