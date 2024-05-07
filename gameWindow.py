@@ -2,12 +2,8 @@ import DragnDropField
 import pygame
 import Gameobject
 import Button
-import Item
-import Map
 import MouseInput
 import TextRenderer
-import Character
-
 
 class window:
     def __init__(self, width, height):
@@ -43,6 +39,7 @@ def updatepickScreen():
     if pickScreen.isActive:
         create_bt_obj.get_component(Button.button).getClick([lambda: switchScenes(characterScreen, pickScreen)])
         back_bt_obj.get_component(Button.button).getClick([lambda: switchScenes(startscreen, pickScreen)])
+        mapcreator_bt_obj.get_component(Button.button).getClick([lambda: switchScenes(mapSelectScreen, pickScreen)])
 
 def updateStartScreen():
     if startscreen.isActive:
@@ -54,6 +51,10 @@ def updateCharacterScreen():
         dragNDrop_obj.get_component(DragnDropField.dragNDropField).getHover()
         characterBack_bt_obj.get_component(Button.button).getClick(lambda: switchScenes(pickScreen, characterScreen))
 
+def updateMapSelectScreen():
+    if mapSelectScreen.isActive:
+        map_back_bt_obj.get_component(Button.button).getClick(lambda: switchScenes(pickScreen, mapSelectScreen))
+        new_bt_obj.get_component(Button.button).getClick(lambda: switchScenes(mapCreateScreen, mapSelectScreen))
 #</editor-fold>
 
 
@@ -61,13 +62,41 @@ pygame.init()
 clock = pygame.time.Clock()
 startscreen = window(1440, 720)
 startscreen.setActive(True)
+
+
+
+#Creation
 pickScreen = window(1440, 720)
 pickScreen.setActive(False)
 characterScreen = window(1440, 720)
 characterScreen.setActive(False)
+mapSelectScreen = window(1440, 720)
+mapSelectScreen.setActive(False)
+mapCreateScreen = window(1440, 720)
+mapCreateScreen.setActive(False)
+
 
 running = True
+# <editor-fold desc="Map Menu creation">
+#Background creation
+mapCreatebackground_obj = Gameobject.gameobject.create_background(window=mapCreateScreen, sprite="StartScreen.jpg", color=(0, 0, 0), x=0, y=0,
+                                                                  width=1440, height=720, scale=1, text="", size=96)
+#Textfield creation
+dimensions_x_textfield = Gameobject.gameobject.create_textfield(mapCreateScreen, 650, 20,heigth=50, width=50, sprite="Button.png", text="Enter map width",input_type="numbers")
+dimensions_y_textfield = Gameobject.gameobject.create_textfield(mapCreateScreen, 650, 80,heigth=50, width=50, sprite="Button.png", text="Enter map heigth",input_type="numbers")
 
+# </editor-fold>
+# <editor-fold desc="Map Menu creation">
+#Background creation
+mapMenubackground_obj = Gameobject.gameobject.create_background(window=mapSelectScreen, sprite="StartScreen.jpg", color=(0, 0, 0), x=0, y=0,
+                                                                  width=1440, height=720, scale=1, text="", size=96)
+#Button creation
+new_bt_obj = Gameobject.gameobject.create_button(window=mapSelectScreen, x=100, y=310, text="New", size=64, sprite="Button.png")
+map_back_bt_obj = Gameobject.gameobject.create_button(window=mapSelectScreen, x=100, y=420, text="Back", size=64, sprite="Button.png")
+new_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-100, 20)
+map_back_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
+
+# </editor-fold>
 # <editor-fold desc="Start Menu creation">
 #Background creation
 startbackground_obj = Gameobject.gameobject.create_background(window=startscreen, sprite="StartScreen.jpg",color=(0, 0, 0), x=0, y=0,
@@ -84,15 +113,14 @@ exit_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
 pickmenubackground_obj = Gameobject.gameobject.create_background(pickScreen, sprite="StartScreen.jpg", color=(0, 0, 0), x=0, y=0,
                                                width=1440, height=720, scale=1,text="",size=0)
 #Button creation
-play_bt_obj = Gameobject.gameobject.create_button(pickScreen, 600, 310, text="Play", size=64, sprite="Button.png")
+mapcreator_bt_obj = Gameobject.gameobject.create_button(pickScreen, 600, 310, text="Map Creator", size=64, sprite="Button.png")
 create_bt_obj = Gameobject.gameobject.create_button(pickScreen, 600, 420, text="Create", size=64, sprite="Button.png")
 back_bt_obj = Gameobject.gameobject.create_button(pickScreen, 600, 530, text="Back", size=64, sprite="Button.png")
 
 create_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-120, 20)
-play_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
+mapcreator_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
 back_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
 # </editor-fold>
-
 # <editor-fold desc="Character creation">
 #background
 charactercreationbackground_obj = Gameobject.gameobject.create_background(characterScreen, sprite="StartScreen.jpg", color=(0, 0, 0), x=0, y=0,
@@ -118,6 +146,7 @@ characterBack_bt_obj = Gameobject.gameobject.create_button(characterScreen, 1200
 characterBack_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
 
 # </editor-fold
+
 while running:
     startscreen.display.fill((255, 255, 255))
     pickScreen.display.fill((255, 255, 255))
@@ -136,10 +165,13 @@ while running:
     updateStartScreen()
     updatepickScreen()
     updateCharacterScreen()
+    updateMapSelectScreen()
 
     startscreen.renderGameobjects()
     pickScreen.renderGameobjects()
     characterScreen.renderGameobjects()
+    mapSelectScreen.renderGameobjects()
+    mapCreateScreen.renderGameobjects()
 
 
 
