@@ -1,5 +1,8 @@
 import json
 import os
+import shutil
+import pygame
+
 class character:
     def __init__(self, name, maxhealth, maxmana, maxarmor, maxinventoryslots):
         self.name = name
@@ -44,7 +47,6 @@ class character:
     def serializeCharacterData(character):
         folder_name = f"{character.name}_DATA"
         os.makedirs(folder_name, exist_ok=True)
-
         character_json = json.dumps(character.__dict__, indent=4)
 
         json_file_path = os.path.join(folder_name, "character.json")
@@ -55,7 +57,6 @@ class character:
             sprite_file_name = os.path.basename(character.spritePath)
             sprite_dest_path = os.path.join(folder_name, sprite_file_name)
             if os.path.exists(character.spritePath):
-                os.replace(character.spritePath, sprite_dest_path)
+                shutil.copyfile(character.spritePath, sprite_dest_path)
             else:
                 print(f"Sprite image '{character.spritePath}' not found.")
-

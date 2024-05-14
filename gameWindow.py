@@ -1,3 +1,4 @@
+import Character
 import DragnDropField
 import pygame
 import Gameobject
@@ -21,11 +22,7 @@ class window:
 
     def setActive(self, isActive):
         self.isActive = isActive
-
-
 #<editor-fold desc="functions">
-
-
 def exit():
     global running
     running = False
@@ -144,9 +141,14 @@ selectionName_obj = Gameobject.gameobject.create_textfield(characterScreen, 650,
 # Buttons
 characterBack_bt_obj = Gameobject.gameobject.create_button(characterScreen, 1200, 600, text="Back", size=64, sprite="Button.png")
 characterBack_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
+characterCreate_bt_obj = Gameobject.gameobject.create_button(characterScreen, 1000, 600, text="Create", size=64, sprite="Button.png")
+characterCreate_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
 
 # </editor-fold
 
+Anri = Character.character("Anri", 100, 100, 100, 2)
+Anri.spritePath = "StartScreen.jpg"
+Character.character.serializeCharacterData(Anri)
 while running:
     startscreen.display.fill((255, 255, 255))
     pickScreen.display.fill((255, 255, 255))
@@ -172,8 +174,6 @@ while running:
     characterScreen.renderGameobjects()
     mapSelectScreen.renderGameobjects()
     mapCreateScreen.renderGameobjects()
-
-
 
     clock.tick(60)
     pygame.display.flip()
