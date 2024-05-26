@@ -94,8 +94,8 @@ class gameobject:
 
         return background_obj
     @staticmethod
-    def create_image(window, x, y, width, height, scale):
-        image_obj = gameobject(window, sprite="defaultCharacterSprite.png", x=x, y=y,
+    def create_image(window, x, y, width, height, scale, sprite_path = "defaultCharacterSprite.png"):
+        image_obj = gameobject(window, sprite=sprite_path, x=x, y=y,
                                                     width=width, height=height, scale=scale)
         return image_obj
 

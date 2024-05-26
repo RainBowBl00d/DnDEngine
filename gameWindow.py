@@ -160,12 +160,16 @@ def create_preview_and_dragndrop(mapCreateScreen, grid_x, grid_y, preview_window
         mapCreateScreen, sprite="Button.png", color=(0, 0, 0),
         x=x, y=y, width=preview_window_width, height=preview_window_height, scale=1, text="Preview", size=36
     )
+    preview_obj = Gameobject.gameobject.create_image(
+        mapCreateScreen, x=x +15, y=y + 15, width=100, height=100, scale=1, sprite_path="treasureMap.jpg"
+    )
 
     dragNDrop_obj = Gameobject.gameobject.create_dragnDropfield(
         mapCreateScreen, x=x, y=y + preview_window_height , text="Select character image",
         size=dragNDrop_size, sprite="Button.png"
     )
-    dragNDrop_obj.get_component(DragnDropField.dragNDropField).image = preview_background_obj
+
+    dragNDrop_obj.get_component(DragnDropField.dragNDropField).image = preview_obj
 
     return preview_background_obj, dragNDrop_obj
 
@@ -364,7 +368,7 @@ itemdragNDrop_obj = Gameobject.gameobject.create_dragnDropfield(
 )
 
 itempreview_obj = Gameobject.gameobject.create_image(
-    ItemCreateScreen, x=150, y=150, width=200, height=400, scale=1
+    ItemCreateScreen, x=150, y=150, width=200, height=400, scale=1, sprite_path="helmet.png"
 )
 
 itemdragNDrop_obj.get_component(DragnDropField.dragNDropField).image = characterpreview_obj
