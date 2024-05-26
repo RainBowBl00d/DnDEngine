@@ -122,7 +122,7 @@ def saveMap(name,sprite_path_1, sprite_path_2,sprite_path_3,sprite_path_4,sprite
 pygame.init()
 clock = pygame.time.Clock()
 startscreen = window(1440, 720)
-startscreen.setActive(False)
+startscreen.setActive(True)
 
 
 
@@ -130,7 +130,7 @@ startscreen.setActive(False)
 pickScreen = window(1440, 720)
 pickScreen.setActive(False)
 characterScreen = window(1440, 720)
-characterScreen.setActive(True)
+characterScreen.setActive(False)
 mapCreateScreen = window(1440, 720)
 mapCreateScreen.setActive(False)
 ItemCreateScreen = window(1440, 720)
@@ -142,7 +142,7 @@ ItemCreateScreen.setActive(False)
 running = True
 # <editor-fold desc="Map  creation">
 #Background creation
-mapCreatebackground_obj = Gameobject.gameobject.create_background(window=mapCreateScreen, sprite="StartScreen.jpg", color=(0, 0, 0), x=0, y=0,
+mapCreatebackground_obj = Gameobject.gameobject.create_background(window=mapCreateScreen, sprite="assets/StartScreen.jpg", color=(0, 0, 0), x=0, y=0,
                                                                   width=1440, height=720, scale=1, text="", size=96)
 #Select stuff
 preview_window_width = 130
@@ -157,16 +157,16 @@ def create_preview_and_dragndrop(mapCreateScreen, grid_x, grid_y, preview_window
     y = grid_y * preview_window_height + y_offset * (grid_y + 1) -100
 
     preview_background_obj = Gameobject.gameobject.create_background(
-        mapCreateScreen, sprite="Button.png", color=(0, 0, 0),
-        x=x, y=y, width=preview_window_width, height=preview_window_height, scale=1, text="Preview", size=36
+        mapCreateScreen, sprite="assets/Button.png", color=(0, 0, 0),
+        x=x, y=y, width=preview_window_width, height=preview_window_height, scale=1, text="assets/Preview", size=36
     )
     preview_obj = Gameobject.gameobject.create_image(
-        mapCreateScreen, x=x +15, y=y + 15, width=100, height=100, scale=1, sprite_path="treasureMap.jpg"
+        mapCreateScreen, x=x +15, y=y + 15, width=100, height=100, scale=1, sprite_path="assets/treasureMap.jpg"
     )
 
     dragNDrop_obj = Gameobject.gameobject.create_dragnDropfield(
         mapCreateScreen, x=x, y=y + preview_window_height , text="Select character image",
-        size=dragNDrop_size, sprite="Button.png"
+        size=dragNDrop_size, sprite="assets/Button.png"
     )
 
     dragNDrop_obj.get_component(DragnDropField.dragNDropField).image = preview_obj
@@ -209,18 +209,18 @@ map_9_previewbackground_obj, map_9_dragNDrop_obj = create_preview_and_dragndrop(
 # Buttons
 mapCreate_bt_obj = Gameobject.gameobject.create_button(
     mapCreateScreen, x=950, y=500,width=200,
-    text="Create", size=64, sprite="Button.png"
+    text="Create", size=64, sprite="assets/Button.png"
 )
 mapCreate_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-120, 20)
 mapBack_bt_obj = Gameobject.gameobject.create_button(
     mapCreateScreen, x=950, y=600,width=200,
-    text="Back", size=64, sprite="Button.png"
+    text="Back", size=64, sprite="assets/Button.png"
 )
 mapBack_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-120, 20)
 
 selectionMapName_obj = Gameobject.gameobject.create_textfield(
     mapCreateScreen, x=950, y=400,
-    heigth= 50, width=200, sprite="Button.png", input_type="letters"
+    heigth= 50, width=200, sprite="assets/Button.png", input_type="letters"
 )
 name_text = Gameobject.gameobject.create_text(mapCreateScreen, 1200, 400, width= 150, heigth=50,text=": Enter Name", color=(0,0,255))
 name_text.get_component(TextRenderer.textrenderer).setOffset(-65, 0)
@@ -230,25 +230,25 @@ selectionMapName_obj.get_component(TextRenderer.textrenderer).setOffset(-120, 30
 
 # <editor-fold desc="Start Menu creation">
 #Background creation
-startbackground_obj = Gameobject.gameobject.create_background(window=startscreen, sprite="StartScreen.jpg",color=(0, 0, 0), x=0, y=0,
+startbackground_obj = Gameobject.gameobject.create_background(window=startscreen, sprite="assets/StartScreen.jpg",color=(0, 0, 0), x=0, y=0,
                                                         width=1440, height=720, scale=1, text="Dungeons, Dragons and an Engine", size=96)
 #Button creation
-start_bt_obj = Gameobject.gameobject.create_button(window=startscreen, x=100, y=310, width=200,text="Start", size=64, sprite="Button.png")
-exit_bt_obj = Gameobject.gameobject.create_button(window=startscreen, x=100, y=420,width=200, text="Exit", size=64, sprite="Button.png")
+start_bt_obj = Gameobject.gameobject.create_button(window=startscreen, x=100, y=310, width=200,text="Start", size=64, sprite="assets/Button.png")
+exit_bt_obj = Gameobject.gameobject.create_button(window=startscreen, x=100, y=420,width=200, text="Exit", size=64, sprite="assets/Button.png")
 start_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-100, 20)
 exit_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
 
 # </editor-fold>
 # <editor-fold desc="Pick Menu creation">
 #Background creation
-pickmenubackground_obj = Gameobject.gameobject.create_background(pickScreen, sprite="StartScreen.jpg", color=(0, 0, 0), x=0, y=0,
+pickmenubackground_obj = Gameobject.gameobject.create_background(pickScreen, sprite="assets/StartScreen.jpg", color=(0, 0, 0), x=0, y=0,
                                                width=1440, height=720, scale=1,text="",size=0)
 #Button creation
-mapcreator_bt_obj = Gameobject.gameobject.create_button(pickScreen, 600, 230,width=350,height = 100, text="Map Creator", size=64, sprite="Button.png")
-create_bt_obj = Gameobject.gameobject.create_button(pickScreen, 600, 360,width=420,height = 100, text="Create Character", size=64, sprite="Button.png")
-createItem_bt_obj = Gameobject.gameobject.create_button(pickScreen, 600, 490,width=300,height = 100, text="Create Item", size=64, sprite="Button.png")
+mapcreator_bt_obj = Gameobject.gameobject.create_button(pickScreen, 600, 230,width=350,height = 100, text="Map Creator", size=64, sprite="assets/Button.png")
+create_bt_obj = Gameobject.gameobject.create_button(pickScreen, 600, 360,width=420,height = 100, text="Create Character", size=64, sprite="assets/Button.png")
+createItem_bt_obj = Gameobject.gameobject.create_button(pickScreen, 600, 490,width=300,height = 100, text="Create Item", size=64, sprite="assets/Button.png")
 
-back_bt_obj = Gameobject.gameobject.create_button(pickScreen, 600, 620, width=200,height = 100,text="Back", size=64, sprite="Button.png")
+back_bt_obj = Gameobject.gameobject.create_button(pickScreen, 600, 620, width=200,height = 100,text="Back", size=64, sprite="assets/Button.png")
 
 
 create_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-120, 20)
@@ -260,19 +260,19 @@ back_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-90, 20)
 # <editor-fold desc="Character creation">
 # Background
 charactercreationbackground_obj = Gameobject.gameobject.create_background(
-    characterScreen, sprite="StartScreen.jpg", color=(0, 0, 0),
+    characterScreen, sprite="assets/StartScreen.jpg", color=(0, 0, 0),
     x=0, y=0, width=1440, height=720, scale=1, text="", size=0
 )
 
 # Select stuff
 previewbackground_obj = Gameobject.gameobject.create_background(
-    characterScreen, sprite="Button.png", color=(0, 0, 0),
+    characterScreen, sprite="assets/Button.png", color=(0, 0, 0),
     x=100, y=50, width=500, height=600, scale=1, text="Preview", size=36
 )
 
 dragNDrop_obj = Gameobject.gameobject.create_dragnDropfield(
     characterScreen, x=600, y=550, text="Select character image",
-    size=24, sprite="Button.png"
+    size=24, sprite="assets/Button.png"
 )
 
 characterpreview_obj = Gameobject.gameobject.create_image(
@@ -293,7 +293,7 @@ text_offset_y = 35
 
 selectionInventory_obj = Gameobject.gameobject.create_textfield(
     characterScreen, x=textfield_x, y=50, heigth=textfield_height,
-    width=textfield_width, sprite="Button.png", input_type="numbers", text="0"
+    width=textfield_width, sprite="assets/Button.png", input_type="numbers", text="0"
 )
 selectionInventory_obj.get_component(TextRenderer.textrenderer).setOffset(text_offset_x, text_offset_y)
 inventory_text = Gameobject.gameobject.create_text(characterScreen, textfield_x + 200, 50, width= 400, heigth=50,text=": Enter the amount of invetory slots", color=(0,0,255))
@@ -301,7 +301,7 @@ inventory_text.get_component(TextRenderer.textrenderer).setOffset(-200, 5)
 
 selectionHealth_obj = Gameobject.gameobject.create_textfield(
     characterScreen, x=textfield_x, y=50 + (textfield_height + textfield_padding) * 1,
-    heigth=textfield_height, width=textfield_width, sprite="Button.png", input_type="numbers", text="0"
+    heigth=textfield_height, width=textfield_width, sprite="assets/Button.png", input_type="numbers", text="0"
 )
 selectionHealth_obj.get_component(TextRenderer.textrenderer).setOffset(text_offset_x, text_offset_y)
 health_text = Gameobject.gameobject.create_text(characterScreen, textfield_x + 200, 50 + (textfield_height + textfield_padding) * 1, width= 300, heigth=50,text=": Enter the amount of health", color=(0,0,255))
@@ -309,7 +309,7 @@ health_text.get_component(TextRenderer.textrenderer).setOffset(-150, 5)
 
 selectionMana_obj = Gameobject.gameobject.create_textfield(
     characterScreen, x=textfield_x, y=50 + (textfield_height + textfield_padding) * 2,
-    heigth=textfield_height, width=textfield_width, sprite="Button.png", input_type="numbers", text="0"
+    heigth=textfield_height, width=textfield_width, sprite="assets/Button.png", input_type="numbers", text="0"
 )
 selectionMana_obj.get_component(TextRenderer.textrenderer).setOffset(text_offset_x, text_offset_y)
 mana_text = Gameobject.gameobject.create_text(characterScreen, textfield_x + 200, 50 + (textfield_height + textfield_padding) * 2, width= 300, heigth=50,text=": Enter the amount of mana", color=(0,0,255))
@@ -317,7 +317,7 @@ mana_text.get_component(TextRenderer.textrenderer).setOffset(-150, 5)
 
 selectionArmor_obj = Gameobject.gameobject.create_textfield(
     characterScreen, x=textfield_x, y=50 + (textfield_height + textfield_padding) * 3,
-    heigth=textfield_height, width=textfield_width, sprite="Button.png", input_type="numbers", text="0"
+    heigth=textfield_height, width=textfield_width, sprite="assets/Button.png", input_type="numbers", text="0"
 )
 selectionArmor_obj.get_component(TextRenderer.textrenderer).setOffset(text_offset_x, text_offset_y)
 armor_text = Gameobject.gameobject.create_text(characterScreen, textfield_x + 200, 50 + (textfield_height + textfield_padding) * 3, width= 300, heigth=50,text=": Enter the amount of armor", color=(0,0,255))
@@ -325,7 +325,7 @@ armor_text.get_component(TextRenderer.textrenderer).setOffset(-150, 5)
 
 selectionName_obj = Gameobject.gameobject.create_textfield(
     characterScreen, x=textfield_x, y=50 + (textfield_height + textfield_padding) * 4,
-    heigth= textfield_height, width=textfield_width, sprite="Button.png", input_type="letters", text="Example"
+    heigth= textfield_height, width=textfield_width, sprite="assets/Button.png", input_type="letters", text="Example"
 )
 selectionName_obj.get_component(TextRenderer.textrenderer).setOffset(text_offset_x, text_offset_y)
 name_text = Gameobject.gameobject.create_text(characterScreen, textfield_x + 200, 50 + (textfield_height + textfield_padding) * 4, width= 150, heigth=50,text=": Enter Name", color=(0,0,255))
@@ -338,37 +338,37 @@ button_height = 80
 button_padding = 20
 
 characterBack_bt_obj = Gameobject.gameobject.create_button(
-    characterScreen, x=1200, y=button_y, width=200, text="Back", size=64, sprite="Button.png"
+    characterScreen, x=1200, y=button_y, width=200, text="Back", size=64, sprite="assets/Button.png"
 )
 
 characterBack_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-100, 20)
 
 characterCreate_bt_obj = Gameobject.gameobject.create_button(
     characterScreen, x=1100 - (button_width + button_padding), y=button_y, width=200,
-    text="Create", size=64, sprite="Button.png"
+    text="Create", size=64, sprite="assets/Button.png"
 )
 characterCreate_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-120, 20)
 # </editor-fold
 # <editor-fold desc="Item creation">
 # Background
 itemcreationbackground_obj = Gameobject.gameobject.create_background(
-    ItemCreateScreen, sprite="StartScreen.jpg", color=(0, 0, 0),
+    ItemCreateScreen, sprite="assets/StartScreen.jpg", color=(0, 0, 0),
     x=0, y=0, width=1440, height=720, scale=1, text="", size=0
 )
 
 # Select stuff
 itempreviewbackground_obj = Gameobject.gameobject.create_background(
-    ItemCreateScreen, sprite="Button.png", color=(0, 0, 0),
+    ItemCreateScreen, sprite="assets/Button.png", color=(0, 0, 0),
     x=100, y=50, width=500, height=600, scale=1, text="Preview", size=36
 )
 
 itemdragNDrop_obj = Gameobject.gameobject.create_dragnDropfield(
     ItemCreateScreen, x=600, y=600, text="Select character image",
-    size=24, sprite="Button.png"
+    size=24, sprite="assets/Button.png"
 )
 
 itempreview_obj = Gameobject.gameobject.create_image(
-    ItemCreateScreen, x=150, y=150, width=200, height=400, scale=1, sprite_path="helmet.png"
+    ItemCreateScreen, x=150, y=150, width=200, height=400, scale=1, sprite_path="assets/helmet.png"
 )
 
 itemdragNDrop_obj.get_component(DragnDropField.dragNDropField).image = characterpreview_obj
@@ -385,7 +385,7 @@ text_offset_y = 35
 
 itemselectionHealth_obj = Gameobject.gameobject.create_textfield(
     ItemCreateScreen, x=textfield_x, y=50 + (textfield_height + textfield_padding) * 1,
-    heigth=textfield_height, width=textfield_width, sprite="Button.png", input_type="numbers", text="0"
+    heigth=textfield_height, width=textfield_width, sprite="assets/Button.png", input_type="numbers", text="0"
 )
 itemselectionHealth_obj.get_component(TextRenderer.textrenderer).setOffset(text_offset_x, text_offset_y)
 itemhealth_text = Gameobject.gameobject.create_text(ItemCreateScreen, textfield_x + 200, 50 + (textfield_height + textfield_padding) * 1, width= 300, heigth=50,text=": Enter the amount of health", color=(0,0,255))
@@ -393,7 +393,7 @@ itemhealth_text.get_component(TextRenderer.textrenderer).setOffset(-150, 5)
 
 itemselectionMana_obj = Gameobject.gameobject.create_textfield(
     ItemCreateScreen, x=textfield_x, y=50 + (textfield_height + textfield_padding) * 2,
-    heigth=textfield_height, width=textfield_width, sprite="Button.png", input_type="numbers",text="0"
+    heigth=textfield_height, width=textfield_width, sprite="assets/Button.png", input_type="numbers",text="0"
 )
 itemselectionMana_obj.get_component(TextRenderer.textrenderer).setOffset(text_offset_x, text_offset_y)
 itemmana_text = Gameobject.gameobject.create_text(ItemCreateScreen, textfield_x + 200, 50 + (textfield_height + textfield_padding) * 2, width= 300, heigth=50,text=": Enter the amount of mana", color=(0,0,255))
@@ -401,7 +401,7 @@ itemmana_text.get_component(TextRenderer.textrenderer).setOffset(-150, 5)
 
 itemselectionArmor_obj = Gameobject.gameobject.create_textfield(
     ItemCreateScreen, x=textfield_x, y=50 + (textfield_height + textfield_padding) * 3,
-    heigth=textfield_height, width=textfield_width, sprite="Button.png", input_type="numbers", text="0"
+    heigth=textfield_height, width=textfield_width, sprite="assets/Button.png", input_type="numbers", text="0"
 )
 itemselectionArmor_obj.get_component(TextRenderer.textrenderer).setOffset(text_offset_x, text_offset_y)
 itemarmor_text = Gameobject.gameobject.create_text(ItemCreateScreen, textfield_x + 200, 50 + (textfield_height + textfield_padding) * 3, width= 300, heigth=50,text=": Enter the amount of armor", color=(0,0,255))
@@ -409,7 +409,7 @@ itemarmor_text.get_component(TextRenderer.textrenderer).setOffset(-150, 5)
 
 itemselectionName_obj = Gameobject.gameobject.create_textfield(
     ItemCreateScreen, x=textfield_x, y=50 + (textfield_height + textfield_padding) * 4,
-    heigth= textfield_height, width=textfield_width, sprite="Button.png", input_type="letters",text="Helmet"
+    heigth= textfield_height, width=textfield_width, sprite="assets/Button.png", input_type="letters",text="Helmet"
 )
 itemselectionName_obj.get_component(TextRenderer.textrenderer).setOffset(text_offset_x, text_offset_y)
 itemname_text = Gameobject.gameobject.create_text(ItemCreateScreen, textfield_x + 200, 50 + (textfield_height + textfield_padding) * 4, width= 150, heigth=50,text=": Enter Name", color=(0,0,255))
@@ -422,14 +422,14 @@ button_height = 80
 button_padding = 20
 
 itemBack_bt_obj = Gameobject.gameobject.create_button(
-    ItemCreateScreen, x=1200, y=button_y,width= 200, text="Back", size=64, sprite="Button.png"
+    ItemCreateScreen, x=1200, y=button_y,width= 200, text="Back", size=64, sprite="assets/Button.png"
 )
 
 itemBack_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-100, 20)
 
 itemCreate_bt_obj = Gameobject.gameobject.create_button(
     ItemCreateScreen, x=1100 - (button_width + button_padding), y=button_y,width=200,
-    text="Create", size=64, sprite="Button.png"
+    text="Create", size=64, sprite="assets/Button.png"
 )
 itemCreate_bt_obj.get_component(TextRenderer.textrenderer).setOffset(-120, 20)
 # </editor-fold
