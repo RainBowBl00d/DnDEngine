@@ -1,5 +1,7 @@
 import json
 import os
+import shutil
+
 
 class worldMap:
     def __init__(self, name, width, height):
@@ -23,7 +25,7 @@ class worldMap:
         }
 
     def serializeMapData(self):
-        folder_name = f"{self.name}_DATA"
+        folder_name = f"{self.name}_MAP_DATA"
         os.makedirs(folder_name, exist_ok=True)
 
         json_file_path = os.path.join(folder_name, "map.json")
@@ -35,7 +37,7 @@ class worldMap:
                 sprite_file_name = os.path.basename(segment.spritePath)
                 sprite_dest_path = os.path.join(folder_name, sprite_file_name)
                 if os.path.exists(segment.spritePath):
-                    os.replace(segment.spritePath, sprite_dest_path)
+                    shutil.copyfile(segment.spritePath, sprite_dest_path)
                 else:
                     print(f"Sprite image '{segment.spritePath}' not found.")
 

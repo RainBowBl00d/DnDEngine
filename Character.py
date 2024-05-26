@@ -45,7 +45,7 @@ class character:
 
     @staticmethod
     def serializeCharacterData(character):
-        folder_name = f"{character.name}_DATA"
+        folder_name = f"{character.name}_CHARACTER_DATA"
         os.makedirs(folder_name, exist_ok=True)
         character_json = json.dumps(character.__dict__, indent=4)
 

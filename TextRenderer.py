@@ -11,8 +11,6 @@ class textrenderer:
         self.offset_y = offset_y
         self.input_type = input_type
 
-
-
     def setText(self, text):
         self.text = text
 

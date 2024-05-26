@@ -69,9 +69,9 @@ class gameobject:
                 component.update(self.surface)
 
     @staticmethod
-    def create_button(window, x, y, text="Button", size=32, sprite=None, color=None):
+    def create_button(window, x, y,width= 100, height =100, text="Button", size=32, sprite=None, color=None):
 
-        button_obj = gameobject(window, x=x, y=y, height=100, width=200,sprite=sprite, color=color)
+        button_obj = gameobject(window, x=x, y=y, height=height, width=width,sprite=sprite, color=color)
 
         button_obj.addComponent(button_obj.transform)
         button_obj.addComponent(button_obj.spriterenderer)
@@ -114,6 +114,18 @@ class gameobject:
 
         return textfield_obj
     @staticmethod
+    def create_text(window, x, y,width, heigth, text="enter text", size=32, sprite=None, color=None, input_type = "mixed"):
+        textfield_obj = gameobject(window, x=x, y=y, height=heigth, width=width,sprite=sprite, color=color)
+
+        textfield_obj.addComponent(textfield_obj.transform)
+        textfield_obj.addComponent(textfield_obj.spriterenderer)
+
+        text_renderer = TextRenderer.textrenderer(textfield_obj, text=text, size=size, offset_y=0, offset_x=0, input_type = input_type)
+        textfield_obj.addComponent(text_renderer)
+
+
+        return textfield_obj
+    @staticmethod
     def create_dragnDropfield(window, x, y, sprite= None, color=None):
         dragdropfield_obj = gameobject(window, x=x, y=y, height=100, width=200, sprite=sprite, color=color)
 
@@ -127,7 +139,7 @@ class gameobject:
 
     @staticmethod
     def create_dragnDropfield(window, x, y, text, size, sprite=None,color=None):
-        dragnDropfield_obj = gameobject(window, x=x, y=y, height=100, width=200,sprite=sprite, color=color )
+        dragnDropfield_obj = gameobject(window, x=x, y=y, height=100, width=100,sprite=sprite, color=color )
 
         dragnDropfield_obj.addComponent(dragnDropfield_obj.transform)
         dragnDropfield_obj.addComponent(dragnDropfield_obj.spriterenderer)
